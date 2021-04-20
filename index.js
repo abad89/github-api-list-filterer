@@ -12,6 +12,7 @@ let fullApiList = []
 let workingApiList = []
 const tbody = document.getElementById(`api-table-body`)
 const noAuthBtn = document.getElementById('no-auth-button')
+const apiKeyBtn = document.getElementById('apikey-button')
 
 const getApiList = () => {
     return fetch(`https://api.publicapis.org/entries`)
@@ -33,9 +34,23 @@ const filterByNoAuth = (arr) => {
     workingApiList.forEach(api => addApiToTbody(api))
 }
 
-noAuthBtn.addEventListener("click", (e) => {
+const filterByKey = (arr) => {
+    arr.forEach((api) => {
+        if (api.Auth === "apiKey") {
+            workingApiList.push(api)
+        }
+    })
+    workingApiList.forEach(api => addApiToTbody(api))
+}
+
+noAuthBtn.addEventListener("click", () => {
     tbody.innerHTML = ""
     filterByNoAuth(fullApiList)
+})
+
+apiKeyBtn.addEventListener("click", () => {
+    tbody.innerHTML=""
+    filterByKey(fullApiList)
 })
 
 
