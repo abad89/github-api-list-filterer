@@ -86,6 +86,7 @@ oAuthBtn.addEventListener("click", () => {
 
 otherAuthBtn.addEventListener("click", () => {
     revertPageState()
+    currentFilter = ``
     otherAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
     filterByOther(fullApiList)
 })
@@ -93,12 +94,30 @@ otherAuthBtn.addEventListener("click", () => {
 showAllBtn.addEventListener("click", () => {
     revertPageState()
     showAllBtn.style.backgroundColor="rgb(100, 100, 100)"
-    pagedApiList = fullApiList.slice((pageNumber-1)*20, pageNumber*20)
+    workingApiList = fullApiList
+    pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
     pagedApiList.forEach(api => addApiToTbody(api))
+})
+
+document.getElementById(`next-page-button`).addEventListener("click", () => {
+    pageNumber++
+    pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
+    tbody.innerHTML=""
+    pagedApiList.forEach(api => addApiToTbody(api))
+})
+
+document.getElementById(`prev-page-button`).addEventListener("click", () => {
+    if (pageNumber >= 2) {
+        pageNumber--
+        pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
+        tbody.innerHTML=""
+        pagedApiList.forEach(api => addApiToTbody(api))
+    }
 })
 
 getApiList().then(list => {
     list.entries.forEach(api => fullApiList.push(api))
+    workingApiList = fullApiList
     pagedApiList = fullApiList.slice((pageNumber-1)*20, pageNumber*20)
     pagedApiList.forEach(api => addApiToTbody(api))
     // console.log(fullApiList)
