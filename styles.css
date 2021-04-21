@@ -23,7 +23,6 @@ button {
     background-color: rgb(170, 170, 170);
     border: 1px solid black;
     padding: 15px 32px;
-    font-size: 16px;
     transition-duration: 0.3s;
     cursor: pointer;
     outline: none;
@@ -32,9 +31,7 @@ button {
 button:hover {background-color: rgb(100, 100, 100);}
 
 #page-buttons {
-    padding-top: 25px;
-    font-size: 6px;
-    /* margin: auto; */
+    padding: 5px 16px;
     width: 90%;
     display: flex;
     margin: auto;
@@ -51,6 +48,7 @@ button:hover {background-color: rgb(100, 100, 100);}
 table {
     margin: auto;
     width: 90%;
+    height: 700px;
     border-collapse: collapse;
 }
 
@@ -59,8 +57,15 @@ table td, table th {
     padding: 4px;
 }
 table th {
+    color: white;
     background-color: rgb(22, 22, 22);
     height: 30px;
+}
+
+tr {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 table tr:nth-child(even) {background-color: rgb(18, 18, 18);}

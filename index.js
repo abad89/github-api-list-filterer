@@ -38,7 +38,7 @@ const revertPageState = (e) => {
 
 
 const addApiToTbody = (api) => {
-    tbody.innerHTML += `<tr><td><a href="${api.Link}">${api.API}</a></td><td>${api.Description}</td><td>${api.Category}</td><td>${api.Auth}</td><td>${api.Cors}</td><td>${api.HTTPS}</td></tr>`
+    tbody.innerHTML += `<tr><td class="nameTd"><a href="${api.Link}">${api.API}</a></td><td class="descTd">${api.Description}</td><td>${api.Category}</td><td>${api.Auth}</td><td>${api.Cors}</td><td>${api.HTTPS}</td></tr>`
 }
 
 const filterList = (arr) => {
