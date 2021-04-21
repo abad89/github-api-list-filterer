@@ -17,6 +17,15 @@ const oAuthBtn = document.getElementById('oauth-button')
 const otherAuthBtn = document.getElementById('other-auth-button')
 const showAllBtn = document.getElementById('show-all-button')
 
+showAllBtn.style.backgroundColor = "rgb(100, 100, 100)"
+
+const revertBtnClr = () => {
+    const buttons = [noAuthBtn, apiKeyBtn, oAuthBtn, otherAuthBtn, showAllBtn]
+    buttons.forEach((button) => {
+        button.style.backgroundColor = "rgb(170, 170, 170)"
+    })
+}
+
 const getApiList = () => {
     return fetch(`https://api.publicapis.org/entries`)
     .then(r => r.json())
@@ -68,26 +77,36 @@ const filterByOther = (arr) => {
 
 noAuthBtn.addEventListener("click", () => {
     tbody.innerHTML = ""
+    revertBtnClr()
+    noAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
     filterByNoAuth(fullApiList)
 })
 
 apiKeyBtn.addEventListener("click", () => {
     tbody.innerHTML=""
+    revertBtnClr()
+    apiKeyBtn.style.backgroundColor="rgb(100, 100, 100)"
     filterByKey(fullApiList)
 })
 
 oAuthBtn.addEventListener("click", () => {
     tbody.innerHTML=""
+    revertBtnClr()
+    oAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
     filterByOAuth(fullApiList)
 })
 
 otherAuthBtn.addEventListener("click", () => {
     tbody.innerHTML=""
+    revertBtnClr()
+    otherAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
     filterByOther(fullApiList)
 })
 
 showAllBtn.addEventListener("click", () => {
     tbody.innerHTML=""
+    revertBtnClr()
+    showAllBtn.style.backgroundColor="rgb(100, 100, 100)"
     fullApiList.forEach(api => addApiToTbody(api))
 })
 
