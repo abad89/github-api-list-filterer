@@ -8,8 +8,11 @@
 //     "Category": "Animals"
 // }
 
+let pageNumber = 1
 let fullApiList = []
 let workingApiList = []
+let pagedApiList = []
+let currentFilter = ``
 const tbody = document.getElementById(`api-table-body`)
 const noAuthBtn = document.getElementById('no-auth-button')
 const apiKeyBtn = document.getElementById('apikey-button')
@@ -19,58 +22,41 @@ const showAllBtn = document.getElementById('show-all-button')
 
 showAllBtn.style.backgroundColor = "rgb(100, 100, 100)"
 
-const revertBtnClr = () => {
-    const buttons = [noAuthBtn, apiKeyBtn, oAuthBtn, otherAuthBtn, showAllBtn]
-    buttons.forEach((button) => {
-        button.style.backgroundColor = "rgb(170, 170, 170)"
-    })
-}
 
 const getApiList = () => {
     return fetch(`https://api.publicapis.org/entries`)
     .then(r => r.json())
 }
 
+const revertPageState = (e) => {
+    tbody.innerHTML = ""
+    pageNumber=1
+    const buttons = [noAuthBtn, apiKeyBtn, oAuthBtn, otherAuthBtn, showAllBtn]
+    buttons.forEach((button) => {
+        button.style.backgroundColor = "rgb(170, 170, 170)"
+    })
+}
 
 
 const addApiToTbody = (api) => {
     tbody.innerHTML += `<tr><td><a href="${api.Link}">${api.API}</a></td><td>${api.Description}</td><td>${api.Category}</td><td>${api.Auth}</td><td>${api.Cors}</td><td>${api.HTTPS}</td></tr>`
 }
 
-const filterByNoAuth = (arr) => {
+const filterList = (arr) => {
     workingApiList = []
     arr.forEach((api) => {
-        if (api.Auth === "") {
+        if (api.Auth === currentFilter) {
             workingApiList.push(api)
         }
     })
-    workingApiList.forEach(api => addApiToTbody(api))
-}
-
-const filterByKey = (arr) => {
-    workingApiList = []
-    arr.forEach((api) => {
-        if (api.Auth === "apiKey") {
-            workingApiList.push(api)
-        }
-    })
-    workingApiList.forEach(api => addApiToTbody(api))
-}
-
-const filterByOAuth = (arr) => {
-    workingApiList = []
-    arr.forEach((api) => {
-        if (api.Auth === "OAuth") {
-            workingApiList.push(api)
-        }
-    })
-    workingApiList.forEach(api => addApiToTbody(api))
+    pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
+    pagedApiList.forEach(api => addApiToTbody(api))
 }
 
 const filterByOther = (arr) => {
     workingApiList = []
     arr.forEach ((api) => {
-        if (api.Auth === "X-Mashape-Key" || api.Auth === "User-Agent") {
+        if (api.Auth === `X-Mashape-Key` || api.Auth === `User-Agent`) {
             workingApiList.push(api)
         }
     })
@@ -78,43 +64,43 @@ const filterByOther = (arr) => {
 }
 
 noAuthBtn.addEventListener("click", () => {
-    tbody.innerHTML = ""
-    revertBtnClr()
+    revertPageState()
+    currentFilter = ``
     noAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
-    filterByNoAuth(fullApiList)
+    filterList(fullApiList)
 })
 
 apiKeyBtn.addEventListener("click", () => {
-    tbody.innerHTML=""
-    revertBtnClr()
+    revertPageState()
+    currentFilter = `apiKey`
     apiKeyBtn.style.backgroundColor="rgb(100, 100, 100)"
-    filterByKey(fullApiList)
+    filterList(fullApiList)
 })
 
 oAuthBtn.addEventListener("click", () => {
-    tbody.innerHTML=""
-    revertBtnClr()
+    revertPageState()
+    currentFilter = `OAuth`
     oAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
-    filterByOAuth(fullApiList)
+    filterList(fullApiList)
 })
 
 otherAuthBtn.addEventListener("click", () => {
-    tbody.innerHTML=""
-    revertBtnClr()
+    revertPageState()
     otherAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
     filterByOther(fullApiList)
 })
 
 showAllBtn.addEventListener("click", () => {
-    tbody.innerHTML=""
-    revertBtnClr()
+    revertPageState()
     showAllBtn.style.backgroundColor="rgb(100, 100, 100)"
-    fullApiList.forEach(api => addApiToTbody(api))
+    pagedApiList = fullApiList.slice((pageNumber-1)*20, pageNumber*20)
+    pagedApiList.forEach(api => addApiToTbody(api))
 })
 
 getApiList().then(list => {
-    list.entries.forEach(api => addApiToTbody(api))
     list.entries.forEach(api => fullApiList.push(api))
+    pagedApiList = fullApiList.slice((pageNumber-1)*20, pageNumber*20)
+    pagedApiList.forEach(api => addApiToTbody(api))
     // console.log(fullApiList)
 })
 
