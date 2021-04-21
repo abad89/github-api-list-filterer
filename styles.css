@@ -1,8 +1,31 @@
 body {
     color: rgb(204, 204, 204);
     background-color: rgb(38, 38, 38);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-table a {
-    color: rgb(106, 152, 175);
+#controls {
+    margin: auto;
+    width: 90%;
+    /* display: flex;
+    justify-content: center; */
+    padding-bottom: 25px;
 }
+
+table {
+    margin: auto;
+    width: 90%;
+    border-collapse: collapse;
+}
+
+table td, table th {
+    border: 1px solid rgb(51, 51, 51);
+    padding: 4px;
+}
+table th {background-color: rgb(22, 22, 22);}
+
+table tr:nth-child(even) {background-color: rgb(18, 18, 18);}
+
+/* table tr:hover {background-color: rgb(11, 11, 11);} */
+
+table a {color: rgb(106, 152, 175);}
