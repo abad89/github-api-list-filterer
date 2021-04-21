@@ -4,12 +4,26 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#header {
+    margin: auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 #controls {
     margin: auto;
     width: 90%;
-    /* display: flex;
-    justify-content: center; */
+    display: flex;
+    justify-content: center;
     padding-bottom: 25px;
+}
+
+button {
+    background-color: rgb(170, 170, 170);
+    border: 1px solid black;
+    padding: 15px 32px;
+    font-size: 16px;
 }
 
 table {
@@ -22,10 +36,16 @@ table td, table th {
     border: 1px solid rgb(51, 51, 51);
     padding: 4px;
 }
-table th {background-color: rgb(22, 22, 22);}
+table th {
+    background-color: rgb(22, 22, 22);
+    height: 30px;
+}
 
 table tr:nth-child(even) {background-color: rgb(18, 18, 18);}
 
 /* table tr:hover {background-color: rgb(11, 11, 11);} */
 
-table a {color: rgb(106, 152, 175);}
+table a {
+    color: rgb(106, 152, 175);
+    font-weight: bold;
+}
