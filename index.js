@@ -31,6 +31,8 @@ const getApiList = () => {
     .then(r => r.json())
 }
 
+
+
 const addApiToTbody = (api) => {
     tbody.innerHTML += `<tr><td><a href="${api.Link}">${api.API}</a></td><td>${api.Description}</td><td>${api.Category}</td><td>${api.Auth}</td><td>${api.Cors}</td><td>${api.HTTPS}</td></tr>`
 }
