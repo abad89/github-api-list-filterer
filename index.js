@@ -13,19 +13,21 @@ let workingApiList = []
 const tbody = document.getElementById(`api-table-body`)
 const noAuthBtn = document.getElementById('no-auth-button')
 const apiKeyBtn = document.getElementById('apikey-button')
+const oAuthBtn = document.getElementById('oauth-button')
+const otherAuthBtn = document.getElementById('other-auth-button')
+const showAllBtn = document.getElementById('show-all-button')
 
 const getApiList = () => {
     return fetch(`https://api.publicapis.org/entries`)
     .then(r => r.json())
 }
 
-
-
 const addApiToTbody = (api) => {
     tbody.innerHTML += `<tr><td><a href="${api.Link}">${api.API}</a></td><td>${api.Description}</td><td>${api.Category}</td><td>${api.Auth}</td><td>${api.Cors}</td><td>${api.HTTPS}</td></tr>`
 }
 
 const filterByNoAuth = (arr) => {
+    workingApiList = []
     arr.forEach((api) => {
         if (api.Auth === "") {
             workingApiList.push(api)
@@ -35,12 +37,32 @@ const filterByNoAuth = (arr) => {
 }
 
 const filterByKey = (arr) => {
+    workingApiList = []
     arr.forEach((api) => {
         if (api.Auth === "apiKey") {
             workingApiList.push(api)
         }
     })
     workingApiList.forEach(api => addApiToTbody(api))
+}
+
+const filterByOAuth = (arr) => {
+    workingApiList = []
+    arr.forEach((api) => {
+        if (api.Auth === "OAuth") {
+            workingApiList.push(api)
+        }
+    })
+    workingApiList.forEach(api => addApiToTbody(api))
+}
+
+const filterByOther = (arr) => {
+    workingApiList = []
+    arr.forEach ((api) => {
+        if (api.Auth === "X-Mashape-Key" || api.Auth === "User-Agent") {
+            workingApiList.push(api)
+        }
+    })
 }
 
 noAuthBtn.addEventListener("click", () => {
@@ -53,6 +75,20 @@ apiKeyBtn.addEventListener("click", () => {
     filterByKey(fullApiList)
 })
 
+oAuthBtn.addEventListener("click", () => {
+    tbody.innerHTML=""
+    filterByOAuth(fullApiList)
+})
+
+otherAuthBtn.addEventListener("click", () => {
+    tbody.innerHTML=""
+    filterByOther(fullApiList)
+})
+
+showAllBtn.addEventListener("click", () => {
+    tbody.innerHTML=""
+    fullApiList.forEach(api => addApiToTbody(api))
+})
 
 getApiList().then(list => {
     list.entries.forEach(api => addApiToTbody(api))
