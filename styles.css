@@ -19,6 +19,20 @@ body {
     padding-bottom: 25px;
 }
 
+#page-buttons {
+    padding-top: 25px;
+    /* margin: auto; */
+    width: 90%;
+    display: flex;
+    margin: auto;
+}
+#first-page-button,#prev-page-button {
+    margin-right: auto;
+}
+#left-page-buttons {
+    margin-left: auto;
+}
+
 button {
     background-color: rgb(170, 170, 170);
     border: 1px solid black;
