@@ -29,7 +29,6 @@ const getApiList = () => {
 }
 
 const revertPageState = (e) => {
-    tbody.innerHTML = ""
     pageNumber=1
     const buttons = [noAuthBtn, apiKeyBtn, oAuthBtn, otherAuthBtn, showAllBtn]
     buttons.forEach((button) => {
@@ -49,8 +48,7 @@ const filterList = (arr) => {
             workingApiList.push(api)
         }
     })
-    pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
-    pagedApiList.forEach(api => addApiToTbody(api))
+    appendNewPageToTable()
 }
 
 const filterByOther = (arr) => {
@@ -61,6 +59,12 @@ const filterByOther = (arr) => {
         }
     })
     workingApiList.forEach(api => addApiToTbody(api))
+}
+
+const appendNewPageToTable = () => {
+    pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
+    tbody.innerHTML=""
+    pagedApiList.forEach(api => addApiToTbody(api))
 }
 
 noAuthBtn.addEventListener("click", () => {
@@ -86,6 +90,7 @@ oAuthBtn.addEventListener("click", () => {
 
 otherAuthBtn.addEventListener("click", () => {
     revertPageState()
+    tbody.innerHTML=""
     currentFilter = ``
     otherAuthBtn.style.backgroundColor="rgb(100, 100, 100)"
     filterByOther(fullApiList)
@@ -93,25 +98,25 @@ otherAuthBtn.addEventListener("click", () => {
 
 showAllBtn.addEventListener("click", () => {
     revertPageState()
+    tbody.innerHTML=""
     showAllBtn.style.backgroundColor="rgb(100, 100, 100)"
     workingApiList = fullApiList
     pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
     pagedApiList.forEach(api => addApiToTbody(api))
 })
 
+
 document.getElementById(`next-page-button`).addEventListener("click", () => {
-    pageNumber++
-    pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
-    tbody.innerHTML=""
-    pagedApiList.forEach(api => addApiToTbody(api))
+    if (workingApiList.slice(pageNumber*20, (pageNumber+1)*20).length > 0) {
+        pageNumber++
+        appendNewPageToTable()
+    }
 })
 
 document.getElementById(`prev-page-button`).addEventListener("click", () => {
     if (pageNumber >= 2) {
         pageNumber--
-        pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
-        tbody.innerHTML=""
-        pagedApiList.forEach(api => addApiToTbody(api))
+        appendNewPageToTable()
     }
 })
 

@@ -19,8 +19,21 @@ body {
     padding-bottom: 25px;
 }
 
+button {
+    background-color: rgb(170, 170, 170);
+    border: 1px solid black;
+    padding: 15px 32px;
+    font-size: 16px;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    outline: none;
+}
+
+button:hover {background-color: rgb(100, 100, 100);}
+
 #page-buttons {
     padding-top: 25px;
+    font-size: 6px;
     /* margin: auto; */
     width: 90%;
     display: flex;
@@ -33,17 +46,7 @@ body {
     margin-left: auto;
 }
 
-button {
-    background-color: rgb(170, 170, 170);
-    border: 1px solid black;
-    padding: 15px 32px;
-    font-size: 16px;
-    transition-duration: 0.3s;
-    cursor: pointer;
-    outline: none;
-}
 
-button:hover {background-color: rgb(100, 100, 100);}
 
 table {
     margin: auto;
