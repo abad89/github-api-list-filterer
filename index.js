@@ -63,6 +63,7 @@ const filterByOther = (arr) => {
             workingApiList.push(api)
         }
     })
+    workingApiList.forEach(api => addApiToTbody(api))
 }
 
 noAuthBtn.addEventListener("click", () => {
