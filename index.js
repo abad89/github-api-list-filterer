@@ -47,12 +47,9 @@ const filterList = (arr) => {
     const searchTerm = searchBox.value.toLowerCase()
     arr.forEach((api) => {
         if (
-            api.Auth === currentFilter 
-            && (
-                searchTerm==="" 
-                || api.API.toLowerCase().includes(searchTerm)
-                || api.Description.toLowerCase().includes(searchTerm)
-            )
+            (api.Auth === currentFilter || currentFilter === "")
+            && 
+            (searchTerm==="" || api.API.toLowerCase().includes(searchTerm) || api.Description.toLowerCase().includes(searchTerm))
         ) {
             workingApiList.push(api)
         }
@@ -65,14 +62,9 @@ const filterByOther = (arr) => {
     const searchTerm = searchBox.value.toLowerCase()
     arr.forEach ((api) => {
         if (
-            (
-                api.Auth === `X-Mashape-Key` 
-                || api.Auth === `User-Agent`
-            ) && (
-                searchTerm==="" 
-                || api.API.toLowerCase().includes(searchTerm)
-                || api.Description.toLowerCase().includes(searchTerm)
-            )
+            (api.Auth === `X-Mashape-Key` || api.Auth === `User-Agent`) 
+            && 
+            (searchTerm==="" || api.API.toLowerCase().includes(searchTerm) || api.Description.toLowerCase().includes(searchTerm))
         ) {
             workingApiList.push(api)
         }
@@ -118,10 +110,20 @@ otherAuthBtn.addEventListener("click", () => {
 showAllBtn.addEventListener("click", () => {
     revertPageState()
     tbody.innerHTML=""
+    currentFilter = ``
     showAllBtn.style.backgroundColor="rgb(100, 100, 100)"
-    workingApiList = fullApiList
+    const searchTerm = searchBox.value.toLowerCase()
+    workingApiList = fullApiList.filter((api) => {
+        return searchTerm==="" || api.API.toLowerCase().includes(searchTerm) || api.Description.toLowerCase().includes(searchTerm)
+    })
     pagedApiList = workingApiList.slice((pageNumber-1)*20, pageNumber*20)
     pagedApiList.forEach(api => addApiToTbody(api))
+})
+
+searchBox.addEventListener("keydown", (e) =>{
+    if (e.key==="Enter") {
+        filterList(fullApiList)
+    }
 })
 
 
