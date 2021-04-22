@@ -19,6 +19,7 @@ const apiKeyBtn = document.getElementById('apikey-button')
 const oAuthBtn = document.getElementById('oauth-button')
 const otherAuthBtn = document.getElementById('other-auth-button')
 const showAllBtn = document.getElementById('show-all-button')
+const searchBox = document.getElementById('search-bar')
 
 showAllBtn.style.backgroundColor = "rgb(100, 100, 100)"
 
@@ -43,9 +44,14 @@ const addApiToTbody = (api) => {
 
 const filterList = (arr) => {
     workingApiList = []
+    const searchTerm = searchBox.value.toLowerCase()
     arr.forEach((api) => {
-        if (api.Auth === currentFilter) {
-            workingApiList.push(api)
+        if (
+            api.Auth === currentFilter 
+            && (searchTerm==="" 
+            || api.API.toLowerCase().includes(searchTerm)
+            || api.Description.toLowerCase().includes(searchTerm))) {
+                workingApiList.push(api)
         }
     })
     appendNewPageToTable()
@@ -53,8 +59,14 @@ const filterList = (arr) => {
 
 const filterByOther = (arr) => {
     workingApiList = []
+    const searchTerm = searchBox.value.toLowerCase()
     arr.forEach ((api) => {
-        if (api.Auth === `X-Mashape-Key` || api.Auth === `User-Agent`) {
+        if (
+            (api.Auth === `X-Mashape-Key` 
+            || api.Auth === `User-Agent`)
+            && (searchTerm==="" 
+            || api.API.toLowerCase().includes(searchTerm)
+            || api.Description.toLowerCase().includes(searchTerm))) {
             workingApiList.push(api)
         }
     })

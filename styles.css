@@ -11,6 +11,20 @@ body {
     justify-content: space-evenly;
 }
 
+#search-bar {
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+input {
+    width: 50%;
+    outline: none;
+}
+
+input::placeholder {font-style: italic;}
+
 #controls {
     margin: auto;
     width: 90%;
