@@ -48,10 +48,13 @@ const filterList = (arr) => {
     arr.forEach((api) => {
         if (
             api.Auth === currentFilter 
-            && (searchTerm==="" 
-            || api.API.toLowerCase().includes(searchTerm)
-            || api.Description.toLowerCase().includes(searchTerm))) {
-                workingApiList.push(api)
+            && (
+                searchTerm==="" 
+                || api.API.toLowerCase().includes(searchTerm)
+                || api.Description.toLowerCase().includes(searchTerm)
+            )
+        ) {
+            workingApiList.push(api)
         }
     })
     appendNewPageToTable()
@@ -62,11 +65,15 @@ const filterByOther = (arr) => {
     const searchTerm = searchBox.value.toLowerCase()
     arr.forEach ((api) => {
         if (
-            (api.Auth === `X-Mashape-Key` 
-            || api.Auth === `User-Agent`)
-            && (searchTerm==="" 
-            || api.API.toLowerCase().includes(searchTerm)
-            || api.Description.toLowerCase().includes(searchTerm))) {
+            (
+                api.Auth === `X-Mashape-Key` 
+                || api.Auth === `User-Agent`
+            ) && (
+                searchTerm==="" 
+                || api.API.toLowerCase().includes(searchTerm)
+                || api.Description.toLowerCase().includes(searchTerm)
+            )
+        ) {
             workingApiList.push(api)
         }
     })
